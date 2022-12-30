@@ -27,6 +27,13 @@ docker run tiny-java-app:latest
 
 The image is 23.1 MB decompressed and 8.6MB compressed.
 
+Along with all other benefits of the Chainguard's stack:
+
+- Fully reproducible by default
+- SBOM support
+- Multi-arch
+- etc...
+
 ```
 docker images | grep tiny
 tiny-java-app                                 latest         80ac5468534c   53 years ago    23.1MB
