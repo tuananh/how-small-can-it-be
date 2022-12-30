@@ -1,0 +1,42 @@
+package:
+  name: tiny-java-app
+  version: 0.1.1
+  epoch: 0
+  description: Tiny Java application with melange/apko & GraalVM
+  target-architecture:
+    - all
+  copyright:
+    - license: MIT
+      paths:
+        - "*"
+  dependencies:
+    runtime:
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+      - "@local ./packages"
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - ca-certificates-bundle
+      - glibc
+      - openjdk-17
+      - openjdk-17-jre
+      - busybox
+      - zlib-dev
+      - zlib
+      - zlib-static
+      - native-image@local
+
+pipeline:
+  - runs: |
+      mkdir -p ${{targets.destdir}}/opt/tiny-java-app
+      export JAVA_HOME=/usr/lib/jvm/openjdk-jre
+      export LD_LIBRARY_PATH=$JAVA_HOME/lib:$LD_LIBRARY_PATH
+      export PATH=/usr/graalvm-ce-java17/bin:$PATH
+      
+      javac App.java
+      native-image --static --libc=glibc -o app App
+      cp app ${{targets.destdir}}/opt/tiny-java-app

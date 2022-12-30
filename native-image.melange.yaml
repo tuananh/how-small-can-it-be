@@ -1,0 +1,42 @@
+package:
+  name: native-image
+  version: 0.1.1
+  epoch: 0
+  description: GraalVM native-image
+  target-architecture:
+    - all
+  copyright:
+    - license: MIT
+      paths:
+        - "*"
+  dependencies:
+    runtime:
+      - glibc-dev
+      - zlib-dev
+      - gcc
+      - libstdc++-dev
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - ca-certificates-bundle
+      - busybox
+      - zlib-dev
+
+pipeline:
+  - if: ${{build.arch}} == 'x86_64'
+    uses: fetch
+    with:
+      uri: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.3.0/graalvm-ce-java17-linux-amd64-22.3.0.tar.gz
+      expected-sha256: 3473d8b3b1bc682e95adfb3ac1d9a59b51b0f43e2b752f2a5b550e4ebfa2fd17
+      strip-components: 0
+  - runs: |
+      ls
+      mkdir -p ${{targets.destdir}}/usr
+      mv ./graalvm-ce-java17-22.3.0 ${{targets.destdir}}/usr/graalvm-ce-java17
+      cd ${{targets.destdir}}/usr/graalvm-ce-java17/bin
+      ./gu install native-image
