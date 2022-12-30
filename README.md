@@ -3,7 +3,7 @@ How small can it be?
 
 # Pretty damn small!
 
-A demonstration using GraalVM native image, melange, apko & Wolfi Linux to build a tiny tiny Java application.
+A demonstration using [GraalVM](https://www.graalvm.org/) native image, [melange](https://github.com/chainguard-dev/melange), [apko](https://github.com/chainguard-dev/apko) & [Wolfi Linux](https://github.com/wolfi-dev/os) to build a tiny tiny Java application.
 
 The end goal is to see how small Java application container image can be.
 
