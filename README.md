@@ -18,7 +18,7 @@ The end goal is to see how small Java application container image can be.
 ```sh
 make native-image-pkg
 make tiny-java-app-pkg
-make container
+make container-image
 docker load < tiny-java-app.tar
 docker run tiny-java-app:latest
 ```
